@@ -473,5 +473,3 @@ defined physical movement → reliable MOTION_EVENT
  **M3 — SSP Device Data Model + BLE Protocol + Device BLE communication.**
 
  This gives us a clean boundary: **M2 proves that the physical device can sense and interpret motion; M3 turns that validated device information into a formal communication interface toward the Edge.**
-
- One important practical point: **don't freeze the exact sensor driver, pins, sampling rate, or threshold in the repository yet.** Once you receive the IMU tomorrow, we'll use its exact part number to fill those in based on the actual hardware.
