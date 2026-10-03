@@ -1,11 +1,11 @@
-SmartSecurePerimeter (SSP) — Lab PoC Specification
-1. PoC objective
+# SmartSecurePerimeter (SSP) — Lab PoC Specification
+## 1. PoC objective
 
 Demonstrate a functional Device → Edge SSP architecture in which a physical movement event is sensed by an nRF52840-based device, locally interpreted, transmitted over Bluetooth Low Energy (BLE), validated by an Android Edge application, and converted into an SSP monitoring/risk state.
 
 The PoC is intended to demonstrate the architectural principles of distributed intelligence, adaptive monitoring, privacy-aware communication, and measurable engineering rather than reproduce the complete production SSP system.
 
-2. PoC scenario
+## 2. PoC scenario
 
 A monitored device is operating in a defined monitoring context.
 
@@ -26,7 +26,7 @@ SSP state becomes ELEVATED
 
 The initial PoC deliberately uses a simple deterministic rule. Machine learning, positioning/geofencing, cloud intelligence, and advanced risk modelling are subsequent stages.
 
-3. System scope
+## 3. System scope
 Device
 
 Hardware:
@@ -79,7 +79,7 @@ Out of scope for the first vertical slice.
 
 Cloud integration will be introduced after the Device → Edge path is stable.
 
-4. Device processing
+## 4. Device processing
 
 The device shall periodically acquire accelerometer measurements:
 
@@ -98,7 +98,7 @@ The initial motion detector shall be deterministic and configurable.
 
 The exact threshold and sampling parameters will be established experimentally during sensor integration rather than hard-coded into this specification.
 
-5. SSP data model
+## 5. SSP data model
 
 The initial logical event shall contain at least:
 
@@ -118,7 +118,7 @@ MOTION_EVENT
 
 The logical model is independent of the eventual BLE byte-level encoding.
 
-6. BLE interface
+## 6. BLE interface
 
 The device shall expose an SSP-specific BLE GATT service.
 
@@ -132,7 +132,7 @@ Notification capability
 
 The detailed UUIDs, characteristic properties, byte layout, data types, units, and versioning will be defined in the SSP BLE Protocol Specification v1.0 after the device data model has been validated.
 
-7. Edge state model
+## 7. Edge state model
 
 The first Edge implementation shall use two states:
 
@@ -153,7 +153,7 @@ The state transition is intentionally deterministic and explainable.
 
 More sophisticated risk levels and predictive models will be introduced later.
 
-8. Adaptive monitoring — initial demonstration
+## 8. Adaptive monitoring — initial demonstration
 
 The first PoC shall establish the mechanism for adaptive behavior but does not require a sophisticated policy.
 
@@ -170,7 +170,7 @@ increased monitoring policy
 
 The actual sampling and communication changes will be implemented and measured in a subsequent milestone.
 
-9. Privacy principle
+## 9. Privacy principle
 
 The PoC shall distinguish between:
 
@@ -184,7 +184,7 @@ Where possible, the Device → Edge interface should transmit the minimum inform
 
 This principle will be evaluated quantitatively in a later KPI phase.
 
-10. First vertical-slice acceptance test
+## 10. First vertical-slice acceptance test
 
 The first complete SSP demonstration shall satisfy:
 
@@ -228,7 +228,7 @@ The resulting state/event is visible in the Android application.
 
 The complete sequence can be repeated reliably.
 
-11. Initial KPIs
+## 11. Initial KPIs
 
 The first implementation shall establish measurement mechanisms for:
 
@@ -252,7 +252,7 @@ Device/Edge processing time
 
 Energy consumption, battery autonomy, ML performance, cloud latency, scalability, security and privacy KPIs will be added as the corresponding system layers are implemented.
 
-12. Explicitly deferred functionality
+## 12. Explicitly deferred functionality
 
 The following are not required for M1/M2:
 
@@ -282,7 +282,7 @@ Production battery optimization
 
 These remain part of the broader SSP roadmap.
 
-13. M1 exit criterion
+## 13. M1 exit criterion
 
 M1 is complete when the team has agreed on:
 
