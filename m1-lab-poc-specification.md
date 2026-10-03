@@ -1,4 +1,4 @@
-# SmartSecurePerimeter (SSP) — Lab PoC Specification
+# M1 - SmartSecurePerimeter (SSP) — Lab PoC Specification
 ## 1. PoC objective
 
 Demonstrate a functional Device → Edge SSP architecture in which a physical movement event is sensed by an nRF52840-based device, locally interpreted, transmitted over Bluetooth Low Energy (BLE), validated by an Android Edge application, and converted into an SSP monitoring/risk state.
