@@ -1,5 +1,3 @@
-Understood. We will handle the work in two stages, keeping the roadmap as a living document rather than treating its original phase definitions as immutable.
-
 ## TD1 — Create GitHub milestone definitions
 
 The 21 roadmap phases (0–20) should be consolidated into 11 GitHub milestones, M0–M10, as proposed in the roadmap. A milestone can contain several related phases, issues, and deliverables.
