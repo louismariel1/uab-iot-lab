@@ -1,7 +1,3 @@
-Here is the updated documentation, incorporating the successful build, flashing, UART reception, the initial test failure caused by an outdated expected message, and the final PASS result.
-
-Writing
-
 # PCB Flash and UART Smoke Test — nRF52840-DK
 
 ## 1\. Purpose
