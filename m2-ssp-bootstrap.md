@@ -1,4 +1,4 @@
-SmartSecurePerimeter (SSP) — Project Bootstrap
+# SmartSecurePerimeter (SSP) — Project Bootstrap
 
 Document: SSP_PROJECT_BOOTSTRAP.md
 Purpose: Single source of truth for project context, current status, architecture, milestones, and implementation strategy.
