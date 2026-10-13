@@ -1,10 +1,3 @@
-I recommend creating two durable project documents:
-
-1. `SSP_PROJECT_BOOTSTRAP.md` — the single source of truth for project objectives, current status, architecture, milestone boundaries, recovered implementation notes, and the revised strategy for reaching BLE.
-2. `SSP_BATCH_CODE_GENERATION_PLAN.md` — the execution plan for generating, building, testing, and integrating large code batches with minimal manual iteration.
-
-The bootstrap will distinguish verified facts from proposed designs and unverified implementation details. This is especially important because the original session was lost and some of the pasted code was proposed rather than confirmed as committed, built, flashed, or tested.
-
 ## 1. Bootstrap file: `SSP_PROJECT_BOOTSTRAP.md`
 
 Save the following as a Markdown file in the root of your GitHub repository. It consolidates the recovered project information into a reusable context document that can be supplied to any future LLM or development session.
