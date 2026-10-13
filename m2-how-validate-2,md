@@ -1,0 +1,191 @@
+# SSP BLE implementation — generated-code verification plan
+
+The safest approach is to treat the generated code as an unverified implementation baseline. We will inventory every proposed file, verify it in dependency order, fix defects before moving forward, and record evidence for each acceptance gate.
+
+Your existing `hello_world` application and its two passing build/flash scripts remain the known-good baseline. We will not modify them as part of the BLE implementation.
+
+One important distinction: the code in your previous message is a mixture of proposed source files, templates, and incomplete scaffolding. It has not all been confirmed to exist in your repository. The inventory below therefore uses NOT VERIFIED for every proposed artifact until its existence and correctness have been checked.
+
+## 1. Inventory of generated files and modules
+
+### A. Protocol definition and code generation
+
+Verification status: NOT VERIFIED — proposed files, not confirmed in the repository.
+
+| ID | File | Purpose |
+| --- | --- | --- |
+| A01 | `protocol/ssp_ble_v1.yaml` | Authoritative protocol definition |
+| A02 | `tools/ble_codegen/requirements.txt` | Python generator dependencies |
+| A03 | `tools/ble_codegen/generate.py` | YAML validation and code generation |
+| A04 | `tools/ble_codegen/templates/ssp_protocol.h.j2` | C protocol header template |
+| A05 | `tools/ble_codegen/templates/SspProtocol.kt.j2` | Kotlin protocol decoder template |
+| A06 | `tools/ble_codegen/templates/protocol.md.j2` | Protocol documentation template |
+| A07 | `device/firmware/ble_peripheral/src/generated/ssp_protocol.h` | Generated C definitions and encoder |
+| A08 | `edge/android/app/src/main/java/org/ssp/protocol/SspProtocol.kt` | Generated Kotlin definitions and decoder |
+| A09 | `docs/protocol/ssp-ble-v1.md` | Generated protocol reference |
+| A10 | `tests/ble/test_vectors.json` | Shared protocol test vectors |
+| A11 | `tests/ble/test_protocol.py` | Python protocol tests |
+
+### B. Zephyr BLE peripheral
+
+Verification status: NOT VERIFIED — proposed files, not confirmed in the repository.
+
+| ID | File | Purpose |
+| --- | --- | --- |
+| B01 | `device/firmware/ble_peripheral/CMakeLists.txt` | Firmware build configuration |
+| B02 | `device/firmware/ble_peripheral/prj.conf` | Zephyr Bluetooth and console settings |
+| B03 | `device/firmware/ble_peripheral/src/main.c` | Bluetooth initialization and application lifecycle |
+| B04 | `device/firmware/ble_peripheral/src/ssp_gatt.c` | GATT service and characteristics |
+| B05 | `device/firmware/ble_peripheral/src/ssp_event.h` | Event producer interface |
+| B06 | `device/firmware/ble_peripheral/src/ssp_event.c` | Synthetic event generation and notification delivery |
+| B07 | `device/firmware/ble_peripheral/src/ssp_advertising.c` | Advertising configuration, proposed addition |
+| B08 | `device/firmware/ble_peripheral/Kconfig` | Optional development configuration, proposed addition |
+
+The proposed `CMakeLists.txt` references `src/ssp_gatt.c`, but the earlier example places the GATT service in `ssp_event.c`. We must settle on one module boundary before building.
+
+### C. Android Edge application
+
+Verification status: NOT VERIFIED — the Android project is confirmed absent from your previous repository inventory.
+
+| ID | File/module | Purpose |
+| --- | --- | --- |
+| C01 | `edge/android/settings.gradle.kts` | Gradle project configuration |
+| C02 | `edge/android/build.gradle.kts` | Root build configuration |
+| C03 | `edge/android/gradlew` | Gradle wrapper |
+| C04 | `edge/android/app/build.gradle.kts` | Android app build configuration |
+| C05 | `edge/android/app/src/main/AndroidManifest.xml` | BLE permissions and app declaration |
+| C06 | `.../protocol/SspProtocol.kt` | Generated packet decoder; shared with A08 |
+| C07 | `.../state/SspState.kt` | SSP state machine |
+| C08 | `.../ble/SspBleClient.kt` | BLE client interface |
+| C09 | `.../ble/AndroidSspBleClient.kt` | Concrete Android BLE implementation, proposed addition |
+| C10 | `.../ui/` | Monitoring screen and event log, proposed addition |
+| C11 | `edge/android/app/src/test/` | Kotlin protocol and state-machine tests |
+
+The `...` paths above are shorthand for the Android package directory. They must be resolved to actual paths before implementation.
+
+### D. Build orchestration and integration
+
+Verification status: NOT VERIFIED — proposed files, not confirmed in the repository.
+
+| ID | File | Purpose |
+| --- | --- | --- |
+| D01 | `tools/build_ble_demo.sh` | Generation, build and test orchestration |
+| D02 | `tools/test_ble_integration.sh` | Optional hardware integration test, proposed addition |
+| D03 | `docs/testing/ssp-ble-integration.md` | Reproducible integration procedure, proposed addition |
+| D04 | `docs/testing/ssp-ble-test-results.md` | Recorded verification results, proposed addition |
+
+### E. Existing baseline — already verified
+
+These are not generated BLE artifacts and must be preserved.
+
+| File | Status | Evidence |
+| --- | --- | --- |
+| `device/firmware/hello_world/CMakeLists.txt` | VERIFIED | Fresh Zephyr build passed |
+| `device/firmware/hello_world/prj.conf` | VERIFIED | Fresh Zephyr build passed |
+| `device/firmware/hello_world/src/main.c` | VERIFIED | Expected UART output received |
+| `tools/compile_and_flash_test.sh` | VERIFIED | Script completed successfully |
+| `tools/flash_and_uart_smoke_test.sh` | VERIFIED | Script completed successfully |
+
+The verification applies to the versions tested in your terminal session. Keep the original Git baseline so changes can be compared against it.
+
+## 2. Regenerated verification order
+
+We should verify the artifacts in dependency order, not simply in the order they appeared in the generated code.
+
+### Phase 0 — Repository inventory
+
+NOT VERIFIED
+
+Confirm which files actually exist, inspect their contents, and establish the clean Git baseline. Do not generate or overwrite files yet.
+
+### Phase 1 — Protocol contract
+
+NOT VERIFIED
+
+Verify A01 first: field types, lengths, UUIDs, event values, status rules, timestamp semantics and the 17-byte payload.
+
+### Phase 2 — Generator and templates
+
+NOT VERIFIED
+
+Verify A02–A06, then generate A07–A10. Confirm deterministic output and reject invalid protocol definitions.
+
+### Phase 3 — Protocol tests
+
+NOT VERIFIED
+
+Verify A11 and add C and Kotlin tests against the same shared vectors. Test malformed packets, unsupported versions, invalid status and event values.
+
+### Phase 4 — Zephyr compilation
+
+NOT VERIFIED
+
+Verify B01–B08, resolve the GATT module boundary, compile in `/tmp/ssp-ble-demo`, and fix all errors before flashing.
+
+### Phase 5 — BLE peripheral on hardware
+
+NOT VERIFIED
+
+Flash the new firmware. Verify advertising, service discovery, connection management, subscription and actual notification bytes using a BLE client.
+
+### Phase 6 — Android application
+
+NOT VERIFIED
+
+Verify C01–C11 in this order: Gradle setup, manifest and permissions, decoder, state reducer, BLE lifecycle, and UI.
+
+### Phase 7 — Automated integration
+
+NOT VERIFIED
+
+Verify D01–D04. The pipeline must fail when mandatory generation, compilation or unit tests fail, and clearly distinguish software success from hardware integration success.
+
+## 3. Acceptance gates
+
+We will not mark an entire phase verified just because one command exits successfully.
+
+| Gate | Evidence required |
+| --- | --- |
+| G0 — Inventory | File list, Git status and identified missing artifacts |
+| G1 — Contract | YAML validation passes; all fields and UUIDs are unambiguous |
+| G2 — Generation | Two runs produce identical output; generated files are current |
+| G3 — Protocol | C and Kotlin agree with shared vectors; malformed inputs are rejected |
+| G4 — Firmware | Clean build succeeds; no missing GATT or advertising implementation |
+| G5 — Peripheral | Real board advertises and emits correct notification bytes |
+| G6 — Android | App builds; permissions, connection and subscription work |
+| G7 — State transition | Valid `MOTION_EVENT` changes `NORMAL` to `ELEVATED`; invalid packets do not |
+| G8 — End-to-end | Repeated hardware-to-Android tests pass, with logs and results recorded |
+
+## 4. First task: verify what actually exists
+
+We should begin with Phase 0 only. This avoids accidentally overwriting generated files or mistaking code from the proposal for code already present in the repository.
+
+Run the following from `~/ssp-iot-poc`:
+
+bash
+```
+
+cd ~/ssp-iot-poc
+
+echo "=== Git status ==="
+git status --short
+
+echo "=== BLE-related files ==="
+find protocol tools/ble_codegen device/firmware/ble_peripheral \
+     edge/android tests/ble docs/protocol docs/testing \
+     -type f -print 2>/dev/null | sort
+
+echo "=== Existing protocol and generator files ==="
+find device/protocol edge/protocol tools \
+     -maxdepth 5 -type f -print | sort
+
+echo "=== Generated-code markers ==="
+grep -RInE \
+  'SSP_PROTOCOL_VERSION|SSPEventV1|synthetic_motion_event|BT_GATT_SERVICE_DEFINE|class SspState' \
+  protocol tools device edge tests docs \
+  --exclude-dir=.git 2>/dev/null || true
+```
+
+This command is read-only. It will show which proposed files exist, which are missing, and where similar implementations may already be located.
+
+Our working rule: one verification item at a time, with explicit evidence before changing its status from `NOT VERIFIED` to `VERIFIED`. We will regenerate the ordered list after Phase 0, based on the actual repository rather than assumptions.
