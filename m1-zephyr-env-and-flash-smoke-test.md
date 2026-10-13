@@ -1,7 +1,3 @@
-Excellent. This is an important milestone: the SSP `hello_world` application has now built successfully again using your existing Zephyr environment. We have also identified exactly why the previous attempt failed: `west build` was invoked outside the Zephyr workspace, where the `build` command is provided by the workspace's Zephyr extension.
-
-Before continuing with the flash-and-UART test, let's document the environment in Git so we don't have to reconstruct these details next time.
-
 ## 1. What we have verified
 
 | Component | Current status |
