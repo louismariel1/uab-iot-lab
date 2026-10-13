@@ -1,9 +1,3 @@
-Understood. I’ll use the three documents as inputs to restructure M2, with M1 considered DONE (development environment, Git repository, and successful Zephyr Hello World build/flash/UART test).
-
-The key distinction for M2 is between software-level validation using synthetic data and hardware-level validation using a real accelerometer. Passing the first is useful progress, but it does not complete M2.
-
-I recommend structuring M2 as follows.
-
 ## Proposed M2 — Accelerometer Integration and Device-Side Motion Detection
 
 | Sub-milestone | Scope | Completion evidence |
