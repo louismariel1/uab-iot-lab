@@ -1,7 +1,3 @@
-Received. These two documents give us a much stronger basis for finalizing M2. I will treat the IOT Lab Guidelines as the external project requirements, the M1 SSP PoC Specification as the agreed functional direction, and the roadmap as the provisional implementation plan.
-
-We should not finalize M2 yet. The next step is to compare these requirements with the implementation and testing evidence from your current development environment.
-
 ## What these documents establish
 
 ### 1. The project has two sets of acceptance criteria
