@@ -1,19 +1,3 @@
-This is an excellent recovery point. Your repository is intact, the initial Git commit exists, and your WSL/Zephyr build-and-flash procedure is documented. We can now replace guesswork with a repository-driven workflow.
-
-The most important discovery is this:
-
-Only `.gitignore` is tracked in Git. The entire `device/` tree is currently untracked, including the existing Hello World firmware. That means we should preserve and commit the recovered baseline before generating the BLE implementation. We should not overwrite or restructure it yet.
-
-Your current state is therefore:
-
-- Git baseline: `8fa86df` — `Initialize SSP IoT PoC repository`
-- Firmware: `device/firmware/hello_world/` exists, but its current contents have not yet been inspected.
-- Build environment: WSL Ubuntu, Python virtual environment `zephyr-3.12`, Zephyr workspace under `~/zephyrproject`.
-- Board: `nrf52840dk/nrf52840`.
-- Flash/UART verification: `~/flash_hello_test.sh`, with expected result `nRF52840 Hello World TEST: PASS`.
-- BLE implementation: not yet verified.
-- Android implementation: directories exist, but no tracked Android project has been demonstrated.
-
 ## 1. First: secure the recovered baseline
 
 Run these commands from `/home/louis/ssp-iot-poc`. They do not modify the firmware.
