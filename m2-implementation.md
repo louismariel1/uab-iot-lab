@@ -1,15 +1,3 @@
-Your concern is justified. In IoT projects, it is easy to spend too much time perfecting a sensor abstraction, debating data types, or debugging individual modules before having anything visible to demonstrate.
-
-For SSP, I would adopt a vertical-slice-first strategy: get the smallest complete Device → BLE → Android path working as early as possible, then improve the implementation incrementally.
-
-There is one important correction to the milestone terminology:
-
-- M2.7 is the step where we freeze the device-side sensor/data interface.
-- Stage 7 in our previous plan is BLE implementation, which follows that interface definition.
-- We do not need to complete every physical-sensor calibration task before writing BLE code. We can use synthetic events initially and replace them with physical measurements without changing the BLE contract.
-
-So the goal is not to skip sound engineering. It is to avoid making every refinement a prerequisite for seeing the system work.
-
 # 1. Proposed development strategy: reach BLE quickly
 
 I recommend restructuring the work into a sequence of short, demonstrable increments.
