@@ -1,7 +1,3 @@
-Here is a project bootstrap you can save and paste into a new ChatGPT conversation to resume the troubleshooting session without losing the technical context.
-
-Writing
-
 # Project Bootstrap — SSP IoT Proof of Concept (BLE Firmware)
 
 **Bootstrap date:** 14 October 2026\
