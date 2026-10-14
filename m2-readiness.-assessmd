@@ -1,0 +1,137 @@
+Based on the two bootstraps, M2 has a substantial amount of implementation in place, but the level of functionality that can currently be demonstrated is not yet the same as the functionality that has been implemented.
+
+Bootstrap 1 describes an earlier state where the firmware was blocked at link time. Bootstrap 2 documents a later checkpoint where the firmware successfully compiled and linked, producing ELF and HEX files. The latest documented state is therefore the one in Bootstrap 2, although the build and tests still need to be revalidated against commit `43efee7`.
+
+The key distinction is between functionality that can be tested on the host, functionality that is implemented but unverified, and functionality that requires physical BLE hardware.
+
+## 1. What can currently be tested at M2?
+
+1. Firmware compilation and artifact generation
+
+Previously demonstrated
+
+Build the Zephyr firmware for the nRF52840 DK and verify that `zephyr.elf` and `zephyr.hex` exist and are non-empty. The previous successful build used approximately 103 KB of flash and 22 KB of RAM.
+
+Revalidation needed after the latest commit.
+
+2. SSP protocol encoding and decoding
+
+Host-testable
+
+Validate the protocol definition, payload layout, byte order, event fields, sequence numbers, valid messages and malformed-message rejection using the Python tests and test vectors.
+
+The Android Kotlin implementation can be tested against the same vectors to check cross-language compatibility.
+
+The test files exist, but passing results have not yet been confirmed.
+
+3. Firmware event-generation logic
+
+Code-level testable
+
+Inspect and validate the timer-driven event producer, the one-second interval, SSP event encoding, notification-subscription gating and error handling.
+
+The current design generates a synthetic motion value of `1800 mg`, not a reading from a physical sensor.
+
+Actual timer execution and notification delivery still need runtime validation.
+
+4. Android client and application state
+
+Build and unit-test candidate
+
+Test the protocol decoder, state updates and BLE client logic. Verify how the client handles connection states, characteristic notifications, decoded events and errors.
+
+Android build, unit-test and actual device results are not yet documented.
+
+5. Real BLE communication
+
+Hardware-dependent
+
+Verify advertising, service discovery, connection establishment, GATT characteristic access, notification subscription and delivery of decoded SSP events to Android.
+
+No successful over-the-air test has been confirmed.
+
+## 2. Functionality by component
+
+| Component | What M2 can exercise | What remains to be verified |
+| --- | --- | --- |
+| Zephyr firmware | Compile, link and generate firmware artifacts | Reproducible build from the committed checkpoint |
+| BLE advertising | Validate UUID parsing and advertising configuration in code | Actual device visibility and advertised UUID |
+| GATT service | Inspect service and characteristic definitions | Discovery and correct runtime attribute mapping |
+| Status characteristic | Review the implemented read handler | Actual read response from a connected central |
+| Event characteristic | Review notification configuration and subscription logic | Successful CCC subscription and notification delivery |
+| Event publisher | Check timer setup, encoding and synthetic event generation | Runtime timing and transmission |
+| Shared protocol | Test schema, generated code and test vectors | Confirm generator consistency and C/Kotlin agreement |
+| Android BLE client | Build and unit-test client logic | Connect, subscribe, receive and reconnect on a real device |
+| Android state | Test state transitions and event handling | Correct state updates from live peripheral data |
+| Integration scripts | Inspect and execute automated checks | Reliable pass/fail reporting and hardware-test separation |
+| Documentation | Review procedures and test records | Accurate results based on tests actually run |
+
+## 3. What would a successful M2 demonstration look like?
+
+The intended demonstration is an end-to-end flow like this:
+
+nRF52840 development board
+
+Zephyr firmware generates a synthetic 1800 mg motion event every second.
+
+Bluetooth Low Energy
+
+Advertising, connection, GATT discovery and event notifications.
+
+Android SSP client
+
+Scan, connect, subscribe, decode SSP payloads and update application state.
+
+Verified end-to-end result
+
+Android receives and correctly interprets repeated events from the physical peripheral.
+
+The diagram describes the target demonstration, not a test result already achieved.
+
+If the hardware integration works, M2 would demonstrate the complete data path from firmware event generation to Android application state. The data would still be synthetic; it would not yet demonstrate physical motion sensing.
+
+## 4. What can be tested without the board?
+
+A useful part of M2 can be verified without physical hardware. I would prioritize the following automated checks.
+
+1. Repository integrity: Confirm commit `43efee7`, inspect the working tree and verify that the integration script and both test documents contain meaningful content.
+2. Firmware build: Rebuild the committed firmware and verify the ELF and HEX artifacts.
+3. Protocol generation: Run the code generator and check that generated C, Kotlin and documentation match the YAML protocol definition and templates.
+4. Python protocol tests: Execute `tests/ble/test_protocol.py` and check valid and invalid payloads, byte ordering and protocol test vectors.
+5. Android tests: Run the Gradle unit tests for `SspProtocolTest` and `SspStateTest`, followed by the Android app build.
+6. Integration automation: Run `tools/test_ble_integration.sh` and verify that it reports host-side successes separately from hardware checks that could not run.
+
+These checks would establish a strong host-side baseline. They would not establish that BLE radio communication works.
+
+## 5. What is still required for M2 acceptance?
+
+The most important unverified functionality is the actual BLE interaction between the board and Android.
+
+- [ ]Flash the firmware to the nRF52840 DK.
+- [ ]Observe the expected device name and SSP service UUID using a BLE scanner.
+- [ ]Discover the SSP service and both characteristics.
+- [ ]Read the status characteristic and verify the returned value.
+- [ ]Subscribe to the event characteristic notifications.
+- [ ]Confirm that events arrive approximately once per second while subscribed.
+- [ ]Decode the notifications in Android and verify the expected `1800 mg` synthetic value.
+- [ ]Verify that the Android application state updates correctly.
+- [ ]Test unsubscribe, disconnect, reconnect and error handling.
+- [ ]Record actual results, environment details and known issues in the M2 testing documents.
+
+One specific risk deserves attention: the firmware currently sends notifications through `&ssp_service.attrs[4]`. That attribute index must be confirmed against the actual registered GATT attribute layout. Successful compilation cannot establish that it targets the correct characteristic value.
+
+## 6. My assessment of M2 readiness
+
+| M2 area | Assessment |
+| --- | --- |
+| Firmware implementation | Substantially implemented |
+| Firmware build | Previously passed; checkpoint revalidation pending |
+| Shared protocol implementation | Present; consistency tests pending |
+| Android integration | Implemented in source; build and tests pending |
+| Automated validation | Scripts and test files present; execution unverified |
+| Physical BLE integration | Not yet demonstrated |
+| M2 acceptance | Not yet evidenced as complete |
+
+Bottom line: At the latest documented checkpoint, M2 has a buildable firmware implementation and the source structure for a shared SSP protocol and Android BLE client. The immediate testable scope is firmware builds, protocol encoding/decoding, code generation, Android unit tests and state logic. The defining end-to-end functionality—receiving and correctly decoding live BLE notifications on Android—remains unverified.
+
+I would therefore describe the current state as M2 implementation largely in place, host-side validation pending, and hardware integration pending rather than calling M2 complete.
