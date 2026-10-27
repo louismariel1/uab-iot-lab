@@ -374,5 +374,272 @@ The next file I want to inspect is:
 ```c
 device/firmware/ble_peripheral/src/ssp_event.c
 
+This bootstrap changes the assessment significantly.
+
+Revised Assessment
+
+Based on the bootstrap, there is evidence that:
+
+✅ Firmware builds successfully (zephyr.hex and zephyr.elf produced)
+
+✅ ssp_event.c was already implemented after the linker issue
+
+✅ A Zephyr timer publishes synthetic events every second
+
+✅ Events are encoded using the generated SSP protocol
+
+✅ Publishing only occurs when notifications are subscribed
+
+✅ The Android client fully supports scan → connect → service discovery → CCCD subscription → decode
+
+Therefore:
+
+The implementation of Deliverable #1 is probably already complete in code.
+
+What is not complete is the verification evidence proving it works on real hardware.
+
+The Most Important Sentence in the Bootstrap
+
+This statement:
+
+The file was then replaced with a complete implementation containing:
+
+ssp_event_init()
+ssp_event_start()
+A Zephyr timer.
+A one-second publishing interval.
+SSP event encoding using the generated protocol code.
+Notification attempts only while GATT notifications are subscribed.
+
+means the missing piece I was worried about:
+
+ssp_gatt_notify(...)
+
+
+is very likely already being called.
+
+That removes my biggest concern.
+
+What Deliverable #1 Actually Requires
+
+You stated:
+
+"The first project deliverable should clearly demonstrate that there is communication between the Device and the Edge using BLE."
+
+Notice that this is not asking for:
+
+sensor integration
+cloud integration
+state transitions
+machine learning
+motion detection accuracy
+
+It asks only for:
+
+Device
+      |
+      | BLE
+      V
+Edge
+
+
+with demonstrable communication.
+
+Deliverable #1 Definition of Success
+
+Given the current codebase, I would define success as:
+
+Device
+
+Advertises SSP service.
+
+Evidence:
+
+SSP advertising started
+
+Edge
+
+Discovers SSP service.
+
+Evidence:
+
+Device discovered
+
+Connection
+
+Connection established.
+
+Evidence:
+
+Device UART
+
+SSP Edge connected
+
+
+and Android
+
+Connected
+
+Notification Subscription
+
+Android writes CCCD.
+
+Evidence from existing code:
+
+SSP event notifications: enabled
+
+Event Delivery
+
+Device emits periodic synthetic event.
+
+Android receives event.
+
+This is the actual proof of communication.
+
+My Current Deliverable Readiness Score
+Area	StatusBLE Advertising	✅
+BLE Connection	✅
+BLE GATT Service	✅
+Notification Subscription	✅
+Event Generation	✅
+Protocol Encoding	✅
+Protocol Decoding	✅
+Hardware Evidence	❌
+Demo Procedure	❌
+Test Record	❌
+
+Overall:
+
+Code Readiness: 95%
+Demonstration Readiness: 40%
+What You Need Next
+
+Not more architecture.
+
+Not more code.
+
+Not more refactoring.
+
+You need evidence.
+
+Recommended Demonstration Script
+
+This is what I would use for M2 acceptance.
+
+Device Side
+
+Flash firmware.
+
+Open UART monitor.
+
+Expected:
+
+SSP BLE peripheral starting
+Bluetooth initialized
+SSP advertising started
+
+Android Side
+
+Launch SSP app.
+
+Press:
+
+Scan
+
+
+Expected:
+
+Found SSP device
+
+Connect
+
+Press:
+
+Connect
+
+
+Expected UART:
+
+SSP Edge connected
+
+Notification Enable
+
+Expected UART:
+
+SSP event notifications: enabled
+
+
+This line already exists in your code.
+
+Event Traffic
+
+Wait 5 seconds.
+
+Expected UART (depending on implementation):
+
+Published SSP event
+Published SSP event
+Published SSP event
+
+
+Expected Android:
+
+Event(sequence=1 ...)
+Event(sequence=2 ...)
+Event(sequence=3 ...)
+
+
+or equivalent decoded display.
+
+That screenshot pair alone proves Device ↔ Edge communication.
+
+What I Would Do Before Touching Any Code
+
+The bootstrap's own guidance is correct:
+
+First inspect
+sed -n '1,240p' \
+device/firmware/ble_peripheral/src/ssp_event.c
+
+
+I want to verify:
+
+timer interval
+encoding format
+event fields
+logging visibility
+Possible Issue I Still Want to Validate
+
+The bootstrap itself highlights one runtime risk:
+
+&ssp_service.attrs[4]
+
+
+inside:
+
+bt_gatt_notify(...)
+
+
+That attribute index was never runtime validated.
+
+This is probably the single most likely bug remaining.
+
+Everything else appears structurally correct.
+
+If notifications fail at runtime despite successful subscription, this is the first place I would investigate.
+
+My Professional Verdict
+
+If I were reviewing this project as a technical lead, I would currently state:
+
+The SSP team has implemented a BLE peripheral, custom GATT service, protocol encoding/decoding, Android BLE central client, notification subscription flow, and synthetic event publication architecture. The first deliverable is likely complete from an implementation standpoint. Remaining work is primarily verification: demonstrating over-the-air BLE communication, capturing evidence, validating notification delivery on hardware, and documenting the results.
+
+The next artifact that will let us determine whether Deliverable #1 is actually demo-ready is:
+
+device/firmware/ble_peripheral/src/ssp_event.c
+
+
+That file should tell us exactly what event is transmitted, how often it's transmitted, and what evidence we should expect to observe on the Android side. Once we inspect it, we can produce a precise demo procedure and acceptance checklist.
+
 
 That single file will tell us whether Deliverable #1 is already finished or whether we need to add one small heartbeat generator and a demo script.
