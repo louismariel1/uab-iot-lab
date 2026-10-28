@@ -1,0 +1,430 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{quote}
+\textbf{\uline{Internet of Things Labs}}
+
+During these lab sessions, you will work in groups of three on an IoT
+project. You will send data from an electronic device to the cloud via
+an intermediate device, Edge.
+
+During these sessions, you will be able to use the knowledge you have
+acquired in other subjects you have studied in previous years, such as
+project management, programming, AI model training, etc.
+
+We will assume that your group is a company, and I will hire you to
+carry out an IoT project. This project will have minimum requirements,
+which will be evaluated at the end of the course (Below is an outline
+and summary of what you will implement during the practice sessions). As
+a group, you will have to manage the implementation of the project.
+\end{quote}
+
+\includegraphics[width=5.89444in,height=2.05139in]{vertopal_5e758637c6f44a23a9d7f898a1228827/media/image1.png}
+
+\begin{quote}
+You can make a small-scale implementation of your design project. As it
+may not be possible to implement everything you propose in the
+theoretical design document, you can make a simulation of the system,
+generate data and transmitting it from the Device to the Cloud.
+
+\uline{Device (Sensor and PCB)}
+
+Sensors are devices that capture events in our environment. It can be a
+button, an accelerometer or a light, sound, temperature, or humidity
+sensor.
+
+They are connected to a microcontroller that is responsible of receiving
+sensor data and processing them. In our case we will use Bluetooth Low
+Energy (BLE) to extract the data captured by the sensor.
+
+During the course, we lend each group a Nordic nRF52840-DK ( )
+
+\uline{Edge (Android mobile app or Raspberry pi or Laptop)}
+
+An application will connect to the PCB via BLE and receive the data.
+These can be processed on the device or sent to a server over the
+Internet.
+
+It is proposed to use android since 70\% of mobile phones use this
+operating system. In case you have an iPhone and a Mac laptop, you can
+develop an application for this system.
+
+Another option is to use an embedded platform instead of a mobile like
+Edge. For example, you can use a Raspberry pi and develop BLE
+communication on this platform.
+
+\uline{Cloud}
+\end{quote}
+
+In a system where data is captured, the most important thing is to be
+able to store and display
+
+it. That is why we need a database with a back end and a system that
+represents this data, for
+
+\begin{quote}
+example a graph on the web, front end.
+
+With this data we can perform computational tasks such as prediction or
+detection.
+
+(As a Cloud you can use a commercial platform or create a server on your
+own computer to
+
+simulate it).
+
+\textbf{\uline{Tasks:}}
+
+• Program de PCB and send data via BLE
+
+• Receive data from BLE in an Android app or Edge device
+
+• Send data from Edge to Cloud
+
+• Store data on the cloud server
+
+• Create some ML model with the data at Edge or/and Cloud level.
+
+• Show data to final users
+
+\uline{Embedded system Example (Nordic nRF52)}
+
+For PCB programming, you can use:
+
+• Nordic provide with different tool and a plugin for VSCode to program
+
+devices
+
+• PlatformIO
+
+. It is a framework that allows you to transparently program different
+
+embedded processors without needing to know the specifics of each
+manufacturer.
+
+Allows you to use Arduino, ZephyrRTOS, and Mbed.
+
+- \emph{\textbf{Arduino (deprecated -- Errors in BLE library since
+2024)}}
+
+- \emph{\textbf{Zephyr}}
+
+Step by step to run bluetooth through Zephyr (v2.7) on the Nrf52 board:
+\end{quote}
+
+• Download the repository
+
+• Unzip and go to the folder ``example/zephyr-ble-beacon'' and copy it
+to your working
+
+\begin{quote}
+directory.
+\end{quote}
+
+• In visual Studio Code ``Open project'' and select the above folder.
+
+• In the ``platform.ini'' file delete the ``particle\_xenon'' board
+block.
+
+• Compile and upload.
+
+• In your mobile phone, using the NRFConnect app you should see a beacon
+``Test beacon''.
+
+\begin{quote}
+\uline{Example Android BLE (Java):}
+
+Java and Kotlin documentation and example)
+
+Android applications can be used as Edge devices in the IoT
+architecture. Students may implement their mobile application using
+either \textbf{Kotlin} (recommended) or \textbf{Java}.
+
+\textbf{1. Permissions Configuration ( AndroidManifest.xml )}
+
+To prevent runtime permission issues on modern Android devices (Android
+12 / API level 31+), ensure your project declares the updated BLE
+permissions in the manifest:
+
+\textless uses-permission
+android:name="android.permission.BLUETOOTH\_SCAN"
+android:usesPermissionFlags="neverForLocation" /\textgreater{}
+
+\textless uses-permission
+android:name="android.permission.BLUETOOTH\_CONNECT" /\textgreater{}
+
+\textless uses-permission
+android:name="android.permission.ACCESS\_FINE\_LOCATION" /\textgreater{}
+
+\emph{(For devices running Android 11 or lower, standard legacy
+Bluetooth and location permissions apply).}
+
+\textbf{2. Technical References \& Official Documentation}
+
+Students are expected to consult the official Android Developers
+documentation to design their BLE stack (scanning, connection, and data
+acquisition):
+
+• \textbf{BLE Scanning}: Consult BluetoothLeScanner and ScanCallback
+APIs to locate your PCB device using your assigned Service UUID.
+
+• \textbf{GATT Connection \& Service Discovery}: Use BluetoothGatt and
+BluetoothGattCallback to establish the connection and discover available
+services and characteristics.
+
+• \textbf{Notifications}: Enable characteristic notifications locally
+and write to the Client Characteristic Configuration Descriptor (CCCD:
+00002902-0000-1000-8000- 00805f9b34fb) to receive continuous sensor
+updates from the PCB.
+
+\uline{Example Cloud platform:}
+
+• Amazon\\
+• Google cloud\\
+• Azure\\
+• Oracle (free tier 0 VM)\\
+• Simulate cloud behavior on your computer installing Back-end/Web/DB
+server.
+
+\textbf{\uline{Sample tools that you can use to create the system. (You
+can use whatever tools youwant; the list is just a guide)}}
+
+PCB:
+
+• Platformio.org (Arduino, ZephyrRTOS, Mbed) (VSCode) • Nordic SDK
+(VSCode)
+
+Android:
+
+• Android Studio
+
+• Xamarin
+
+• Flutter
+
+• Ionic
+
+Back-end:
+
+• Firebase
+
+• MQTT
+
+• Influx
+
+• AWS Amplify
+
+Front-end:
+
+• HTML5/CSS/JS framework
+
+• Mobile
+
+\textbf{\uline{Evaluation}}
+\end{quote}
+
+\textbf{Final score = 1st report (20\%) + 2nd report (20\%) + project
+(60\%)}
+
+\begin{quote}
+\textbf{Groups B = 8 to 14}
+
+\textbf{Groups A = 1 to 7}
+
+• First Report, task done on PCB and Android regarding BLE
+communication. Submission
+
+through the Virtual Campus:
+
+o\textbf{30th of October}
+
+• Evaluation of the projects in the LAB (Any change on the date will be
+published in
+
+Virtual Campus)
+
+o\textbf{7th of January}
+
+• \textbf{10th of January} - 2nd report with back-end and Front-end +
+zip with code of the project
+
+or github repository. Submission through the Virtual Campus.
+
+\textbf{Project Deliverables \& Report Guidelines}
+
+Both project reports must follow a professional technical format. As
+your group operates as a
+
+company delivering an IoT product, your documentation must clearly
+detail your design
+
+choices, custom protocol specifications, and validation steps.
+
+\textbf{Required Report Structure}
+
+1.\textbf{Executive Summary \& Project Overview}
+
+• High-level description of the company, the IoT product, and the target
+application/use
+
+case.
+
+• Summary of the project goals and system capabilities.
+
+2.\textbf{System Architecture \& Diagram}
+
+• \textbf{Complete Block Diagram}: A high-level visual representation
+showing all three layers:
+
+\textbf{Device (Sensors \& PCB)}, \textbf{Edge (Mobile/Gateway)}, and
+Cloud (Backend/Frontend/ML).
+
+• Identification of interfaces, data flows, and communication channels
+between layers.
+
+3.\textbf{Layer Implementation Details}
+
+• \textbf{Device Layer}: Microcontroller board used, sensor hardware,
+firmware frameworks (e.g., PlatformIO with Zephyr or Arduino), hardware
+interrupts, and power management.
+
+• \textbf{Edge Layer}: Platform choice (Android app in Kotlin/Java,
+Raspberry Pi, laptop), OS version, and BLE scanning/connection
+management.
+
+• \textbf{Cloud Layer}: Backend technology, database strategy
+(Time-Series, Relational, NoSQL), web UI framework, and Machine Learning
+model design/purpose.
+
+• \textbf{Libraries \& Frameworks}: Explicit list of third-party
+dependencies, APIs, and libraries used at each stage.
+
+4.\textbf{Data Structures \& Protocol Payload Specifications}
+
+• Since each group defines its own communication strategy, you must
+explicitly document your payload structures:
+
+o \textbf{BLE Data Frame}: Precise byte breakdown of the data packet
+sent over BLE (e.g., header, sensor payload fields, timestamp,
+CRC/checksum).
+
+o \textbf{Edge-to-Cloud Data Format}: Protocol used (e.g., MQTT, HTTP
+REST, WebSockets) and JSON/payload schema used for data ingestion.
+
+5.\textbf{Testing, Validation \& Results}
+
+• \textbf{Per-Layer Testing}: Specific unit and functional tests
+executed to verify each component (PCB sensor reading accuracy, BLE
+connection stability, API endpoint response times).
+
+• \textbf{End-to-End Testing}: Validation of complete data flows from
+physical measurement at the PCB to visualization on the web dashboard.
+
+• \textbf{Test Evidence}: Include graphs, logs, or screenshots
+demonstrating operational stability.
+
+\textbf{Team Assessment \& Course Feedback}
+
+To encourage professional responsability and continuously improve the
+course, the final section of the second report must include a
+\textbf{Team \& Self-Assessment} along \textbf{Course Feedback}.
+
+\textbf{1. Teamwork \& Individual Contribution}
+
+Every group member must contribute meaningfully to the project. In this
+subsection, clearly detail:
+
+• \textbf{Task Distribution Matrix}: Provide a breakdown listing the
+specific responsibilities, modules, and code components led by each
+member (e.g., Firmware/PCB, Android Edge app, Backend API, Frontend UI,
+ML model).
+
+• \textbf{Self-Assessment}: Evaluate your own technical growth,
+problem-solving approach, and personal commitment to the
+team\textquotesingle s objectives.
+
+• \textbf{Peer Evaluation \& Collaboration}: Describe how your team
+organized its workflow (e.g., version control, task tracking, meeting
+frequency), how decisions were made, and how any technical or
+interpersonal challenges were resolved.
+
+\textbf{2. Course \& Subject Feedback}
+
+Your constructive feedback is essential for refining future editions of
+this laboratory course. Please provide honest reflections on:
+
+• \textbf{Strengths}: What aspects of the project, lab exercises,
+hardware tools, or teaching methodology were most engaging and
+beneficial for your learning?
+
+• \textbf{Areas for Improvement}: What specific elements would you
+modify or expand? (e.g., clarity of instructions, suggested frameworks,
+hardware resources, schedule, or evaluation criteria).
+\end{quote}
+
+\end{document}
