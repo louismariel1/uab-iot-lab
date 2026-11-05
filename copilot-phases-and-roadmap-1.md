@@ -1,3 +1,6 @@
+we are manipulating position and location data. when should we model this data and introduce it to the current code or how should this sensor data be handled in the SSP project?
+
+
 Excellent suggestion. Based on the SSP specification, the BLE validation work completed, and the current hardware inventory, I'd realign both the report and the roadmap around the actual SSP objective:
 
 Demonstrate distributed Device→Edge intelligence, not merely BLE telemetry.
