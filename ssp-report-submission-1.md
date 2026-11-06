@@ -250,8 +250,6 @@ The payload structure has been verified directly against the firmware serializer
 
 The firmware event structure is:
 
-c
-
 ```c
 struct ssp_event {
     uint8_t version;
@@ -265,8 +263,6 @@ struct ssp_event {
 ```
 
 The firmware defines:
-
-c
 
 ```c
 #define SSP_EVENT_PAYLOAD_LENGTH 17
@@ -310,7 +306,7 @@ Decoded fields:
 Motion value decoding:
 
 ```text
-0x0834 = 2100 mg
+0x0834 = 2100
 ```
 
 ### 6.4 Transmission Validation
