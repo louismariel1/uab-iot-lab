@@ -80,17 +80,24 @@ The implementation uses the following BLE mechanisms:
 
 ```mermaid
 flowchart TD
-    A["nRF52840 Device"] --> B["BLE Advertising (SSP-POC)"]
-    B --> C["Edge Client Scans and Discovers Device"]
-    C --> D["BLE Connection Established"]
-    D --> E["GATT Service and Characteristic Discovery"]
-    E --> F["Edge Client Enables Notifications (CCCD)"]
-    F --> G["SSP Event Generation"]
-    G --> H["Protocol v1 Serialization"]
-    H --> I["BLE Notification Transmission"]
-    I --> J["Edge Client Receives Payload"]
-    J --> K["Protocol v1 Decoding"]
-    K --> L["SSP Event Available to Edge Application"]
+    A["1. nRF52840 Starts BLE Advertising (SSP-POC)"]
+    B["2. Edge Client Scans and Discovers Device"]
+    C["3. Edge Client Establishes BLE Connection"]
+    D["4. GATT Service and Characteristic Discovery"]
+    E["5. Edge Client Enables Notifications (CCCD)"]
+    F["6. Device Generates SSP Events"]
+    G["Protocol v1 Serialization"]
+    H["7. Firmware Transmits Event Payloads via BLE Notifications"]
+    I["8. Edge Client Receives and Decodes Payload"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
 ```
 
 Communication currently uses device-to-Edge BLE notifications.
