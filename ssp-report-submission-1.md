@@ -59,32 +59,6 @@ flowchart TD
     J --> K["Event Presentation"]
 ```
 
-```text
-         SSP DEVICE (nRF52840)
-                  |
-          Sensor Manager
-                  |
-          Motion Detector
-                  |
-          SSP Event Subsystem
-                  |
-          Protocol v1 Encoder
-                  |
-             BLE GATT
-                  |
-          Notification Characteristic
-                  |
-                  v
-          EDGE APPLICATION
-           (Android SSP App)
-                  |
-          BLE Event Reception
-                  |
-          Protocol Decoding
-                  |
-          Event Presentation
-```
-
 **Validation configuration:** nRF Connect on iPhone is currently used as the BLE validation client. The Android SSP application is the intended Edge implementation.
 
 ## 3\. BLE Design
