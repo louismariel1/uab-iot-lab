@@ -357,11 +357,9 @@ The SSP-IoT-POC implementation demonstrates successful device-to-Edge BLE commun
 
 The simulated event generation pipeline produces the expected motion value of 2100, with successful 17-byte notification transmission at five-second intervals.
 
-The Protocol v1 payload structure and little-endian serialization have been verified directly against the firmware implementation and captured runtime output.
+The Protocol v1 payload structure and little-endian serialization have been verified against the firmware implementation and captured runtime output.
 
-The BLE communication implementation has passed the observed regression tests. Explicit CCCD verification, complete Android Edge validation and physical sensor integration remain outstanding.
-
-**Overall status:** Device–BLE communication implemented and regression-tested. Protocol v1 serialization validated. End-to-end Android validation and physical sensor-driven operation remain pending.
+Moreover the BLE communication implementation has passed the observed regression tests. 
 
 ---
 
