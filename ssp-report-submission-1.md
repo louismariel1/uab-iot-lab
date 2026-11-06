@@ -141,8 +141,6 @@ SSP advertising started: SSP-POC
 
 Advertising restarted successfully.
 
-**Result: PASS**
-
 ### 5.3 BLE Reconnection
 
 The iPhone successfully reconnected to the device.
@@ -157,8 +155,6 @@ The complete connection recovery sequence was demonstrated:
 - Client-initiated disconnection.
 - Automatic advertising restart.
 - Successful reconnection.
-
-**Result: PASS**
 
 ### 5.4 Notification Delivery
 
@@ -327,8 +323,6 @@ flowchart TD
 ```
 
 This confirms the expected simulated motion value and its presence in the firmware notification path.
-
-**Result: PASS — Simulated event generation pipeline.**
 
 ### Android Edge Application Status
 
