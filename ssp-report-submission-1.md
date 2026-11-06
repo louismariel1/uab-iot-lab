@@ -461,3 +461,19 @@ SSP-IoT-POC/
 │           ├── A5_notification_delivery.log
 │           └── A6_protocol_v1_payload.log
 ```
+
+## Appendix B — Development Environments and Toolset
+
+The SSP-IoT-POC development environment combines embedded firmware development, BLE communication testing and Android application development. The device firmware targets the Nordic nRF52840 and is developed using the Zephyr RTOS ecosystem, including the `west` build and flash tools. UART serial logging is used for firmware diagnostics and runtime validation. BLE discovery, connection management, GATT service inspection and notification testing are performed using nRF Connect on iPhone. The Android SSP Edge application is developed using Android Studio and provides the client-side BLE communication and Protocol v1 decoding implementation. Git and GitHub are used for source-code version control, project documentation and deliverable management.
+
+| Area | Environment / Tool |
+| --- | --- |
+| Embedded hardware | Nordic nRF52840 |
+| Firmware platform | Zephyr RTOS |
+| Build and flash | West (`west`) |
+| Firmware diagnostics | UART Serial Monitor |
+| BLE validation | nRF Connect on iPhone |
+| Android development | Android Studio |
+| Edge application | Android SSP Application |
+| Version control | Git |
+| Repository and documentation | GitHub |
