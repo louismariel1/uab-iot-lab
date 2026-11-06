@@ -78,14 +78,20 @@ The implementation uses the following BLE mechanisms:
 
 ### Communication Flow
 
-1. The nRF52840 starts BLE advertising using the device name `SSP-POC`.
-2. The Edge Client scans and discovers the device.
-3. The Edge Client establishes a BLE connection.
-4. GATT service and characteristic discovery identifies the SSP communication interface.
-5. The Edge Client enables notifications through the CCCD.
-6. The device generates SSP events and serializes them using Protocol v1.
-7. The firmware transmits event payloads through BLE notifications.
-8. The Edge Client receives and decodes the payload.
+```mermaid
+flowchart TD
+    A["nRF52840 Device"] --> B["BLE Advertising (SSP-POC)"]
+    B --> C["Edge Client Scans and Discovers Device"]
+    C --> D["BLE Connection Established"]
+    D --> E["GATT Service and Characteristic Discovery"]
+    E --> F["Edge Client Enables Notifications (CCCD)"]
+    F --> G["SSP Event Generation"]
+    G --> H["Protocol v1 Serialization"]
+    H --> I["BLE Notification Transmission"]
+    I --> J["Edge Client Receives Payload"]
+    J --> K["Protocol v1 Decoding"]
+    K --> L["SSP Event Available to Edge Application"]
+```
 
 Communication currently uses device-to-Edge BLE notifications.
 
