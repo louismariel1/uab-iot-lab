@@ -86,9 +86,8 @@ flowchart TD
     D["4. GATT Service and Characteristic Discovery"]
     E["5. Edge Client Enables Notifications (CCCD)"]
     F["6. Device Generates SSP Events"]
-    G["Protocol v1 Serialization"]
-    H["7. Firmware Transmits Event Payloads via BLE Notifications"]
-    I["8. Edge Client Receives and Decodes Payload"]
+    G["7. Firmware Transmits Event Payloads via BLE Notifications"]
+    H["8. Edge Client Receives and Decodes Payload"]
 
     A --> B
     B --> C
@@ -97,7 +96,6 @@ flowchart TD
     E --> F
     F --> G
     G --> H
-    H --> I
 ```
 
 Communication currently uses device-to-Edge BLE notifications.
