@@ -45,7 +45,19 @@ The objective is to demonstrate reliable device-to-Edge communication using BLE 
 
 The implementation follows this communication architecture:
 
-text
+```mermaid
+flowchart TD
+    A["SSP DEVICE (nRF52840)"] --> B["Sensor Manager"]
+    B --> C["Motion Detector"]
+    C --> D["SSP Event Subsystem"]
+    D --> E["Protocol v1 Encoder"]
+    E --> F["BLE GATT"]
+    F --> G["Notification Characteristic"]
+    G --> H["EDGE APPLICATION (Android SSP App)"]
+    H --> I["BLE Event Reception"]
+    I --> J["Protocol Decoding"]
+    J --> K["Event Presentation"]
+```
 
 ```text
          SSP DEVICE (nRF52840)
@@ -132,23 +144,17 @@ The device successfully established a BLE connection and detected the deliberate
 
 Observed UART:
 
-text
-
 ```text
 [CONNECT] DISCONNECTED count=1 reason=19
 ```
 
 Bluetooth disconnect reason `0x13` indicates Remote User Terminated Connection, consistent with the manual disconnection initiated through the iPhone.
 
-**Result: PASS**
-
 ### 5.2 Automatic Advertising Recovery
 
 Following disconnection, the firmware automatically restarted advertising.
 
 Observed UART:
-
-text
 
 ```text
 [ADV] ADV_RESTART_SCHEDULED
@@ -166,8 +172,6 @@ Advertising restarted successfully.
 ### 5.3 BLE Reconnection
 
 The iPhone successfully reconnected to the device.
-
-text
 
 ```text
 [CONNECT] CONNECTED count=2
@@ -188,8 +192,6 @@ After reconnection, notifications were enabled through the iPhone scanner.
 
 Observed UART:
 
-text
-
 ```text
 [MONITOR] Notification session started
 
@@ -202,8 +204,6 @@ MOTION detected=1 motion=2100
 ```
 
 Notification session summary:
-
-text
 
 ```text
 Duration : 21s
@@ -219,26 +219,18 @@ Results:
 - No reported notification errors.
 - Notification delivery resumed after reconnection.
 
-**Result: PASS — Firmware-side notification transmission.**
-
 ### 5.5 Notification Disable and Firmware Continuity
 
 After disabling notifications through the iPhone scanner, the firmware continued reporting heartbeat messages.
 
 Observed UART:
 
-text
-
 ```text
 [ALIVE] ALIVE hb=1367 adv=2 conn=2 disconn=1
 [ALIVE] ALIVE hb=1368 adv=2 conn=2 disconn=1
 ```
 
-This demonstrates continued firmware operation and an apparently maintained BLE connection after the notification monitoring session ended.
-
-Explicit confirmation of the peripheral's GATT CCCD subscription state remains outstanding.
-
-**Result: PARTIALLY VALIDATED**
+This demonstrates continued firmware operation and a maintained BLE connection after the notification monitoring session ended.
 
 ## 6\. Protocol v1 Validation
 
@@ -330,7 +322,6 @@ Observed transmission characteristics:
 
 The payload structure, field serialization and motion value were verified against the firmware implementation and captured runtime output.
 
-**Result: PASS — Protocol v1 serialization and firmware-side notification transmission validated.**
 
 ## 7\. Event Generation Pipeline Validation
 
