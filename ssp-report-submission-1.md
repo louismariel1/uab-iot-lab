@@ -366,20 +366,13 @@ The observed motion value matches the expected simulation output.
 
 Current processing flow:
 
-text
-
-```text
-Simulated IMU
-      |
-Sensor Manager
-      |
-Motion Detector
-      |
-SSP Event Subsystem
-      |
-Protocol v1 Encoder
-      |
-BLE Notification
+```mermaid
+flowchart TD
+    A["Simulated IMU"] --> B["Sensor Manager"]
+    B --> C["Motion Detector"]
+    C --> D["SSP Event Subsystem"]
+    D --> E["Protocol v1 Encoder"]
+    E --> F["BLE Notification"]
 ```
 
 This confirms the expected simulated motion value and its presence in the firmware notification path.
@@ -431,15 +424,6 @@ The BLE communication implementation has passed the observed regression tests. E
 
 The following evidence should accompany the report in the GitHub repository.
 
-```mermaid
-flowchart TD
-    A["Simulated IMU"] --> B["Sensor Manager"]
-    B --> C["Motion Detector"]
-    C --> D["SSP Event Subsystem"]
-    D --> E["Protocol v1 Encoder"]
-    E --> F["BLE Notification"]
-```
-
 | Appendix | Evidence | Purpose |
 | --- | --- | --- |
 | A1 | BLE device discovery screenshot | Demonstrates SSP-POC advertising and discovery. |
@@ -448,28 +432,6 @@ flowchart TD
 | A4 | UART connection and advertising logs | Demonstrates connection lifecycle and advertising recovery. |
 | A5 | UART notification logs | Demonstrates event transmission and five-second interval. |
 | A6 | Protocol v1 payload example | Demonstrates the captured 17-byte event payload. |
-
-**Supporting evidence:** Screenshots and UART log excerpts are maintained separately from the main report.
-
-## Suggested GitHub structure
-
-text
-
-```text
-SSP-IoT-POC/
-│
-├── docs/
-│   └── deliverable-1/
-│       ├── SSP_Device_BLE_Edge_Communication_Report.md
-│       │
-│       └── evidence/
-│           ├── A1_ble_discovery.png
-│           ├── A2_ble_connected.png
-│           ├── A3_notifications_enabled.png
-│           ├── A4_connection_recovery.log
-│           ├── A5_notification_delivery.log
-│           └── A6_protocol_v1_payload.log
-```
 
 ## Appendix B — Development Environments and Toolset
 
