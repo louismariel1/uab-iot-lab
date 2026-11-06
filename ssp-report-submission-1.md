@@ -1,7 +1,7 @@
 # SSP-IoT-POC — Device–BLE–Edge Communication Implementation Report
 
 **Deliverable:** IoT Lab — Deliverable 1\
-**Document Status:** Finale Version\
+**Document Status:** Final Version\
 **Project:** SSP-IoT-POC\
 **Target Hardware:** Nordic nRF52840\
 **Validation Client:** nRF Connect on iPhone\
