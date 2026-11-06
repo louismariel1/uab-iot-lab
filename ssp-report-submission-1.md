@@ -348,15 +348,11 @@ The simulated event generation architecture produced the expected motion output.
 
 Observed UART:
 
-text
-
 ```text
 MOTION detected=1 motion=2100
 ```
 
 Expected simulated calculation:
-
-text
 
 ```text
 1200 + 900 = 2100
