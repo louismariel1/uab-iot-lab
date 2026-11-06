@@ -291,8 +291,6 @@ The serializer explicitly implements a fixed-length, little-endian wire represen
 
 Captured device payload:
 
-text
-
 ```text
 01 01 00 01 50 53 53 0E 00 00 00 68 0A 68 00 34 08
 ```
@@ -311,8 +309,6 @@ Decoded fields:
 
 Motion value decoding:
 
-text
-
 ```text
 0x0834 = 2100 mg
 ```
@@ -320,8 +316,6 @@ text
 ### 6.4 Transmission Validation
 
 Subsequent runtime notifications demonstrated sequence progression:
-
-text
 
 ```text
 0E → 0F → 10 → 11
