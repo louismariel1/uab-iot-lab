@@ -429,14 +429,16 @@ The BLE communication implementation has passed the observed regression tests. E
 
 ## Appendix A — Supporting Evidence
 
+The following evidence should accompany the report in the GitHub repository.
+
+```mermaid
 flowchart TD
     A["Simulated IMU"] --> B["Sensor Manager"]
     B --> C["Motion Detector"]
     C --> D["SSP Event Subsystem"]
     D --> E["Protocol v1 Encoder"]
     E --> F["BLE Notification"]
-
-The following evidence should accompany the report in the GitHub repository.
+```
 
 | Appendix | Evidence | Purpose |
 | --- | --- | --- |
