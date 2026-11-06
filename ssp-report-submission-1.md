@@ -1,18 +1,3 @@
-I would incorporate all four positive suggestions. They improve the report without changing its technical scope.
-
-Specifically:
-
-- Add a short Executive Summary before Section 1.
-- Add an Appendix listing the supporting screenshots and UART evidence.
-- Change Android's status to Protocol v1 decoding implementation to avoid implying completed live-device validation.
-- Rename Section 7 to Event Generation Pipeline Validation.
-
-I would also retain the existing BLE Design, Regression Testing, Protocol v1 Validation, Limitations and Next Steps sections.
-
-Here is the final revised version for GitHub.
-
-Writing
-
 # SSP-IoT-POC — Device–BLE–Edge Communication Implementation Report
 
 **Deliverable:** IoT Lab — Deliverable 1\
@@ -476,5 +461,3 @@ SSP-IoT-POC/
 │           ├── A5_notification_delivery.log
 │           └── A6_protocol_v1_payload.log
 ```
-
-Final editorial recommendation: Keep the report as above. The executive summary provides immediate context, the technical sections answer the lab guide directly, and the appendix makes the evidence independently accessible.
